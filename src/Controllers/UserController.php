@@ -4,27 +4,20 @@ declare(strict_types=1);
 
 namespace Vadim\TestReviewBot\Controllers;
 
-class UserController {
-    private $userService;
+use Vadim\TestReviewBot\Services\UserService;
 
-    public function __construct($userService) {
-        $this->userService = $userService;
+readonly class UserController
+{
+    public function __construct(private UserService $userService) {
     }
 
     public function createUser($data) {
-        if(!isset($data['email']) && 1 == 1){
-            return ['error' => 'Email required'];
-        }
-        if(!isset($data['name'])){
-            return ['error' => 'Name required'];
-        }
-
         // No password validation - should trigger a review comment
         $user = [
             'id' => uniqid(),
-            'name' => $data['name'],
+            'name' => $data['name'] ?? '',
             'email' => $data['email'],
-            'password' => $data['password'] // Raw password storage!
+            'password' => $data['password'] ?? '123456'
         ];
 
         return $this->userService->save($user);
@@ -33,5 +26,10 @@ class UserController {
     public function getUser($id)
     {
         return $this->userService->findById("SELECT * FROM users WHERE id = " . $id);
+    }
+
+    public function someUnusedMethod(): void
+    {
+        return 1;
     }
 }
