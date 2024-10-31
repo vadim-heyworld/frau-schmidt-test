@@ -8,17 +8,22 @@ use Vadim\TestReviewBot\Services\UserService;
 
 readonly class UserController
 {
+    private UserService $userService;
+
+    private string $name;
+
     public function __construct(private UserService $userService) {
     }
 
     public function createUser($data) {
-        // No password validation - should trigger a review comment
         $user = [
             'id' => uniqid(),
-            'name' => $data['name'] ?? '',
+            'name' => $data['name'] ?? 'Frau Schmidt',
             'email' => $data['email'],
-            'password' => $data['password'] ?? '123456'
+            'password' => md5($data['password']), // is it secure?
         ];
+
+        $this->name = $user['name'];
 
         return $this->userService->save($user);
     }
@@ -26,10 +31,5 @@ readonly class UserController
     public function getUser($id)
     {
         return $this->userService->findById("SELECT * FROM users WHERE id = " . $id);
-    }
-
-    public function someUnusedMethod(): void
-    {
-        return 1;
     }
 }
