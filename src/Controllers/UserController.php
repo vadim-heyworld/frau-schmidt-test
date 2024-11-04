@@ -18,9 +18,9 @@ readonly class UserController
     public function createUser($data) {
         $user = [
             'id' => uniqid(),
-            'name' => $data['name'] ?? 'Frau Schmidt',
+            'name' => $data['name'] ?? '',
             'email' => $data['email'],
-            'password' => md5($data['password']), // is it secure?
+            'password' => password_hash($data['password'], 'md5'), // is it secure?
         ];
 
         $this->name = $user['name'];
@@ -30,6 +30,6 @@ readonly class UserController
 
     public function getUser($id)
     {
-        return $this->userService->findById("SELECT * FROM users WHERE id = " . $id);
+        return $this->userService->findById("SELECT * FROM users WHERE id = " . $id . " LIMIT 1");
     }
 }
