@@ -20,4 +20,9 @@ class UserService {
         // Simulating database query with security issue
         return $this->users[$query] ?? null;
     }
+
+    public function getByName(string $name): void
+    {
+
+    }
 }
