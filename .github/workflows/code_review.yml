@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: AI PR Review
-        uses: vadim-heyworld/pr-review-action@v0.4.1-alpha
+        uses: vadim-heyworld/frau-schmidt@v0.4.1-alpha
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           project-name: 'tms'
