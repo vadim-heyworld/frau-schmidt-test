@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       (github.event_name == 'pull_request') ||
-      ((github.event_name == 'pull_request_review_comment' || github.event_name == 'issue_comment') && contains(github.event.comment.body, '/explain'))
+      ((github.event_name == 'pull_request_review_comment' || github.event_name == 'issue_comment') && contains(github.event.comment.body, '/why'))
     steps:
       - uses: actions/checkout@v4
       - name: AI PR Review
-        uses: vadim-heyworld/frau-schmidt@v0.4.4-alpha
+        uses: vadim-heyworld/frau-schmidt@v0.5.1-alpha
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           project-name: 'tms'
